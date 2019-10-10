@@ -83,10 +83,9 @@ def main(file='ex1.png', vizinhanca=4, fundo=0):
                 if (not is_fundo(img[linha][coluna], fundo)) and (is_fundo(img2[linha][coluna], fundo)):
                     img2 = busca_largura([linha, coluna], img, img2, vizinhanca, fundo)
                     regiao = regiao + 1
-                    show_imagem(img2, "regioes: " + str(regiao))
+                    #show_imagem(img2, "regioes: " + str(regiao))
 
-    print("regioes => " + str(regiao))
     show_imagem(img2, "Total de " + str(regiao) + " regioes")
-
+    return regiao
 
 main(file='ex_diagonal.png', vizinhanca=4)
