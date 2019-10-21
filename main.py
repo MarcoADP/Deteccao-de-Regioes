@@ -18,7 +18,7 @@ def is_fundo(ponto, fundo):
 
 
 def get_vizinho(coordenada, linha, coluna):
-    return [coordenada[0] + linha, coordenada[1]+coluna]
+    return (coordenada[0] + linha, coordenada[1]+coluna)
 
 
 def get_vizinhos_4(coordenada):
@@ -51,7 +51,8 @@ def outside_image(coordenada, altura, largura):
 def pixel_inutil(ponto_img1, ponto_img2, fundo):
     return is_fundo(ponto_img1, fundo) or not is_fundo(ponto_img2, fundo)
 
-def busca_largura(coordenada, img, img2, vizinhanca, fundo):
+
+def busca_largura(coordenada, img, img2, vizinhanca, fundo, cor):
     fila = queue.Queue()
     fila.put(coordenada)
     while not fila.empty():
@@ -66,7 +67,8 @@ def busca_largura(coordenada, img, img2, vizinhanca, fundo):
         for vizinho in vizinhos:
             fila.put(vizinho)
 
-        img2[atual[0]][atual[1]] = img[atual[0]][atual[1]]
+        #img2[atual] = img[atual]
+        img2[atual] = cor
 
     return img2
 
@@ -81,11 +83,11 @@ def main(file='ex1.png', vizinhanca=4, fundo=0):
         for coluna in range(img.shape[1]):
             if img[linha][coluna][0] > 0 :
                 if (not is_fundo(img[linha][coluna], fundo)) and (is_fundo(img2[linha][coluna], fundo)):
-                    img2 = busca_largura([linha, coluna], img, img2, vizinhanca, fundo)
                     regiao = regiao + 1
-                    #show_imagem(img2, "regioes: " + str(regiao))
+                    img2 = busca_largura((linha, coluna), img, img2, vizinhanca, fundo, regiao)
+                    show_imagem(img2, "regioes: " + str(regiao))
 
     show_imagem(img2, "Total de " + str(regiao) + " regioes")
     return regiao
 
-main(file='ex_diagonal.png', vizinhanca=4)
+#main(file='ex2.png', vizinhanca=4)
